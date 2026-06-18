@@ -56,7 +56,7 @@ jobs:
           TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID }}
           TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL }}
           IMSORGID: ${{ secrets.IMSORGID }}
-          SCOPES: AdobeID, openid, read_organizations, additional_info.projectedProductContext, additional_info.roles, adobeio_api, read_client_secret, manage_client_secrets
+          SCOPES: AdobeID, openid, read_organizations, additional_info.projectedProductContext, additional_info.roles, adobeio_api, read_client_secret, manage_client_secrets, openid, read_organizations
       - name: Set CLI ENV
         run: aio config set cli.env dev
       - name: Select org
