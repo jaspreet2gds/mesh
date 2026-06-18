@@ -11,3 +11,7 @@ meshes
 
 # Template files from @adobe/aio-cli-plugin-api-mesh
 wrangler.toml
+
+#secure files
+.env
+adobe-cred-dev.json
