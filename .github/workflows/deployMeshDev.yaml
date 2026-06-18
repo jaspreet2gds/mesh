@@ -12,6 +12,7 @@ on:
 jobs:
   deploy:
     name: Deploy to Dev
+    environment: dev
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 1
@@ -27,15 +28,14 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Validate Secrets
         run: |
-          if
-          [ -z "${{ secrets.CLIENTID }}" ] ||
+          if [ -z "${{ secrets.CLIENTID }}" ] ||
           [ -z "${{ secrets.CLIENTSECRET }}" ] ||
           [ -z "${{ secrets.TECHNICALACCID }}" ] ||
           [ -z "${{ secrets.TECHNICALACCEMAIL }}" ] ||
           [ -z "${{ secrets.IMSORGID }}" ] ||
           [ -z "${{ secrets.ORGID }}" ] ||
           [ -z "${{ secrets.PROJECTID }}" ] ||
-          [ -z "${{ secrets.WORKSPACEID }}" ]; 
+          [ -z "${{ secrets.WORKSPACEID }}" ]; then
             echo "Please set all required secrets: CLIENTID, CLIENTSECRET, TECHNICALACCID, TECHNICALACCEMAIL, IMSORGID, ORGID, PROJECTID, WORKSPACEID"
             exit 1
           fi
@@ -58,7 +58,7 @@ jobs:
           IMSORGID: ${{ secrets.IMSORGID }}
           SCOPES: AdobeID, openid, read_organizations, additional_info.projectedProductContext, additional_info.roles, adobeio_api, read_client_secret, manage_client_secrets
       - name: Set CLI ENV
-        run: aio config set cli.env prod
+        run: aio config set cli.env dev
       - name: Select org
         run: aio console:org:select ${{ secrets.ORGID }}
       - name: Select project
