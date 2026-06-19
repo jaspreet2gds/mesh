@@ -12,7 +12,7 @@ on:
 jobs:
   deploy:
     name: Deploy to Stage
-    environment: Stage
+    environment: stage
     runs-on: ${{ matrix.os }}
     strategy:
       max-parallel: 1
@@ -28,15 +28,15 @@ jobs:
           node-version: ${{ matrix.node-version }}
       - name: Validate Secrets
         run: |
-          if [ -z "${{ secrets.CLIENTID_stage }}" ] ||
-          [ -z "${{ secrets.CLIENTSECRET_stage }}" ] ||
-          [ -z "${{ secrets.TECHNICALACCID_stage }}" ] ||
-          [ -z "${{ secrets.TECHNICALACCEMAIL_stage }}" ] ||
-          [ -z "${{ secrets.IMSORGID_stage }}" ] ||
-          [ -z "${{ secrets.ORGID_stage }}" ] ||
-          [ -z "${{ secrets.PROJECTID_stage }}" ] ||
-          [ -z "${{ secrets.WORKSPACEID_stage }}" ]; then
-            echo "Please set all required secrets: CLIENTID_stage, CLIENTSECRET_stage, TECHNICALACCID_stage, TECHNICALACCEMAIL_stage, IMSORGID_stage, ORGID_stage, PROJECTID_stage, WORKSPACEID_stage"
+          if [ -z "${{ secrets.CLIENTID_STAGE }}" ] ||
+          [ -z "${{ secrets.CLIENTSECRET_STAGE }}" ] ||
+          [ -z "${{ secrets.TECHNICALACCID_STAGE }}" ] ||
+          [ -z "${{ secrets.TECHNICALACCEMAIL_STAGE }}" ] ||
+          [ -z "${{ secrets.IMSORGID_STAGE }}" ] ||
+          [ -z "${{ secrets.ORGID_STAGE }}" ] ||
+          [ -z "${{ secrets.PROJECTID_STAGE }}" ] ||
+          [ -z "${{ secrets.WORKSPACEID_STAGE }}" ]; then
+            echo "Please set all required secrets: CLIENTID_STAGE, CLIENTSECRET_STAGE, TECHNICALACCID_STAGE, TECHNICALACCEMAIL_STAGE, IMSORGID_STAGE, ORGID_STAGE, PROJECTID_STAGE, WORKSPACEID_STAGE"
             exit 1
           fi
       - name: Setup CLI
@@ -51,20 +51,20 @@ jobs:
         with:
           os: ${{ matrix.os }}
           command: oauth_sts
-          CLIENTID: ${{ secrets.CLIENTID_stage }}
-          CLIENTSECRET: ${{ secrets.CLIENTSECRET_stage }}
-          TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID_stage }}
-          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL_stage }}
-          IMSORGID: ${{ secrets.IMSORGID_stage }}
+          CLIENTID: ${{ secrets.CLIENTID_STAGE }}
+          CLIENTSECRET: ${{ secrets.CLIENTSECRET_STAGE }}
+          TECHNICALACCOUNTID: ${{ secrets.TECHNICALACCID_STAGE }}
+          TECHNICALACCOUNTEMAIL: ${{ secrets.TECHNICALACCEMAIL_STAGE }}
+          IMSORGID: ${{ secrets.IMSORGID_STAGE }}
           SCOPES: AdobeID, openid, read_organizations, additional_info.projectedProductContext, additional_info.roles, adobeio_api, read_client_secret, manage_client_secrets
       - name: Set CLI ENV
         run: aio config set cli.env stage
       - name: Select org
-        run: aio console:org:select ${{ secrets.ORGID_stage }}
+        run: aio console:org:select ${{ secrets.ORGID_STAGE }}
       - name: Select project
-        run: aio console:project:select ${{ secrets.PROJECTID_stage }}
+        run: aio console:project:select ${{ secrets.PROJECTID_STAGE }}
       - name: Select workspace
-        run: aio console:workspace:select ${{ secrets.WORKSPACEID_stage }}
+        run: aio console:workspace:select ${{ secrets.WORKSPACEID_STAGE }}
       - name: Print AIO CLI Config
         run: aio config list
       - name: Get Mesh
